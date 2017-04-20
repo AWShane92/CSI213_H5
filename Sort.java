@@ -6,6 +6,8 @@ public class Sort {
 	
 	public static void bubbleSort(int [] input){
 	
+		boolean sorted = true;
+		
 		for(int i = 0; i < input.length - 1; i++){
 			/*Compares current with next value in list 
 			 * if Current value is higher then swap values
@@ -14,17 +16,18 @@ public class Sort {
 				int temp = input[i + 1];
 				input[i + 1] = input[i];
 				input[i] = temp;
+				sorted = false;
 				comparisons= comparisons + 1;
 			}	
 		}
 		/*If the list isn't sorted then continue running bubbleSort
 		 * recursively.
 		 */
-		if(!sortedList(input)){
+		if(!sorted){
 			bubbleSort(input);
 		}
 		//if the list is sorted then stop sorting
-		else if(sortedList(input)){
+		else if(sorted){
 			return;
 		}
 		
@@ -32,6 +35,7 @@ public class Sort {
 	
 	public static void shakerSort(int [] input){
 		
+		boolean sorted = true;
 		for(int i = 0; i < input.length - 1; i++){
 			/*Compares current value with next value if current
 			 * value is higher then swap values
@@ -40,6 +44,7 @@ public class Sort {
 				int temp = input[i + 1];
 				input[i + 1] = input[i];
 				input[i] = temp;
+				sorted = false;
 				comparisons= comparisons + 1;
 			}	
 		}
@@ -52,6 +57,7 @@ public class Sort {
 				int temp = input[i-1];
 				input[i-1] = input[i];
 				input[i]= temp;
+				sorted = false;
 				comparisons= comparisons + 1;
 			}
 			
@@ -59,30 +65,16 @@ public class Sort {
 		/*If the list isn't sorted then continue running bubbleSort
 		 * recursively.
 		 */
-		if(!sortedList(input)){
+		if(!sorted){
 			shakerSort(input);
 		}
 		//if the list is sorted then stop sorting
-		else if(sortedList(input)){
+		else if(sorted){
 			return;
 		}
 		
 	}
 	
-	public static boolean sortedList(int [] input){
-		//Boolean variable to hold truth value
-		boolean sorted = true;
-		//Traverses the list to check if the list is in order
-		for(int i = 0; i < input.length -1; i++){
-			/*if current variable is greater than its next variable
-			 * then the list isn't in order return false. 
-			 */
-			if(input[i]>input[i + 1]){
-				sorted =  false;
-			}
-		}	
-		return sorted;
-	}
 	
 	public static void main(String[]args){
 		

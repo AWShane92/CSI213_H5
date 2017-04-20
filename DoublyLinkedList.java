@@ -28,7 +28,7 @@ public class DoublyLinkedList {
 		return this.size;
 	}
 	//Methods
-	public void add(Node newNode){
+	public void orderedAdd(Node newNode){
 		
 		//Returns if the newNode added has no data.
 		if(newNode == null){	
@@ -100,6 +100,26 @@ public class DoublyLinkedList {
 			link = link.getNext();		
 			}	
 		}
+	}
+	//***Use to run sort***
+	public void unorderedAdd(Node newNode){
+		
+		//Returns if the newNode added has no data.
+				if(newNode == null){	
+					return;
+				}
+				//Creates first node in list if the list is empty.
+				if(this.isEmpty()){
+					head = tail = newNode;	
+					
+				}
+				else{
+					
+					this.tail.setNext(newNode);
+					newNode.setPrev(this.tail);
+					this.tail = newNode;
+				}
+		
 	}
 	
 	public void delete(Node node){
@@ -180,7 +200,7 @@ public class DoublyLinkedList {
 		}	
 		return false;	
 	}
-	
+
 	public void printList(){
 		
 		//returns "The list is empty" if the list is empty.
@@ -220,18 +240,6 @@ public class DoublyLinkedList {
 		}else{
 			return false;
 		}
-	}
-	public int size(){
-				
-		int counter = 0;
-		Node temp = head;
-	
-		while(temp != null){
-			counter++;
-			temp = temp.getNext();
-		}
-		this.size = counter;
-		return this.size;
 	}
 
 }
