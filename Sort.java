@@ -100,7 +100,7 @@ public class Sort {
 			b[i] = (int)(Math.random() * 100);
 		}
 		//Began test sorting methods
-		//First method test was bubbleSort
+		//First method tested was bubbleSort
 		System.out.println("First array using bubble sort");
 		System.out.println("Before bubble sort: ");
 		for(int i = 0; i < a.length;i++){
