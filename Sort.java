@@ -1,5 +1,7 @@
 package H5;
 
+import java.util.*;
+
 public class Sort {
 	
 	public static int comparisons = 0;
@@ -75,9 +77,126 @@ public class Sort {
 		
 	}
 	
+	public static void bbSort(DoublyLinkedList dll){
+		
+		boolean sorted = true;
+		Node Next = null;
+		Node Prev = null;
+		Node temp = null;
+		Node link = dll.getHead();
+		
+		while(link != null){
+			
+			if((link == dll.getHead())&&(link.getId() > link.getNext().getId())){
+				Next = link.getNext();
+				temp = Next.getNext();
+				link.setPrev(Next);
+				Next.setNext(link);
+				Next.setPrev(null);
+				link.setNext(temp);
+				dll.setHead(Next);
+				sorted = false;	
+			}
+			else if((link.getId() > link.getNext().getId())&&(link.getNext()!=null)){
+				Next = link.getNext();
+				Prev = link.getPrev();
+				temp = Next.getNext();
+				Next.setPrev(Prev);
+				link.setPrev(Next);
+				Next.setNext(link);
+				Prev.setNext(Next);
+				link.setNext(temp);
+				sorted = false;					
+			}
+			
+			link = link.getNext();	
+		}
+		if(!sorted){
+			bbSort(dll);		
+		}
+		else if(sorted){
+			return;
+			
+		}
+				
+	}
 	
+	public static void cocktailShakerSort(DoublyLinkedList dll){
+		
+		boolean sorted = true;
+		Node Next = null;
+		Node Prev = null;
+		Node temp = null;
+		Node link = dll.getHead();
+		
+		while(link != null){
+			
+			if((link == dll.getHead())&&(link.getId() > link.getNext().getId())){
+				Next = link.getNext();
+				temp = Next.getNext();
+				dll.setHead(Next);
+				link.setPrev(Next);
+				dll.getHead().setNext(link);
+				dll.getHead().setPrev(null);
+				link.setNext(temp);
+				sorted = false;	
+			}
+			else if((link != dll.getTail())&&(link.getId() > link.getNext().getId())){
+				Next = link.getNext();
+				Prev = link.getPrev();
+				temp = Next.getNext();
+				Next.setPrev(Prev);
+				link.setPrev(Next);
+				Next.setNext(link);
+				Prev.setNext(Next);
+				link.setNext(temp);
+				sorted = false;					
+		}
+			
+			link = link.getNext();
+			
+		}
+		link = dll.getTail();
+		while(link != null){
+			
+			if((link == dll.getTail())&&(link.getId() < link.getPrev().getId())){
+				Prev = link.getPrev();
+				temp = Prev.getPrev();
+				dll.setTail(Prev);
+				link.setNext(Prev);
+				dll.getTail().setPrev(link);
+				dll.getTail().setNext(null);
+				link.setPrev(temp);
+				temp.setNext(link);
+				sorted = false;
+			}
+			else if((link != dll.getHead())&&(link.getId() < link.getPrev().getId())){
+				Prev = link.getPrev();
+				Next = link.getNext();
+				temp = Prev.getPrev();
+				Prev.setNext(Next);
+				link.setNext(Prev);
+				Prev.setPrev(link);
+				link.setPrev(temp);
+				Next.setPrev(Prev);
+				sorted = false;
+			}
+			
+			link = link.getPrev();
+			
+		}
+		if(!sorted){
+			cocktailShakerSort(dll);		
+		}
+		else if(sorted){
+			return;
+		}
+		
+		
+	}
 	public static void main(String[]args){
 		
+	
 		//Instantiated arrays
 		int [] a = new int [10];
 		int [] b = new int [10];
@@ -123,6 +242,25 @@ public class Sort {
 		}
 		System.out.println(" ");
 		System.out.println("Cocktail Shaker Sort comparisons: "+ comparisons);
+		
+		
+		DoublyLinkedList dll = new DoublyLinkedList();
+		
+		Node a1 = new Node("is Awesome");
+		Node b2 = new Node("is The Bees Knees");
+		Node c3 = new Node("is Cool Beans");
+		Node d4 = new Node("is The Dang Diggity");
+		
+		dll.unorderedAdd(a1);
+		dll.unorderedAdd(b2);
+		dll.unorderedAdd(c3);
+		dll.unorderedAdd(d4);
+		dll.printList();
+		System.out.println(" ");
+		bbSort(dll);
+		dll.printList();
+		
+		
 	}
 
 }

@@ -1,7 +1,5 @@
 package H5;
 
-import H3.Node;
-
 public class DoublyLinkedList {
 	
 	private Node head = null;
@@ -111,13 +109,15 @@ public class DoublyLinkedList {
 				//Creates first node in list if the list is empty.
 				if(this.isEmpty()){
 					head = tail = newNode;	
-					
+					this.size++;	
 				}
+				//Adds every member after list.
 				else{
 					
 					this.tail.setNext(newNode);
 					newNode.setPrev(this.tail);
 					this.tail = newNode;
+					this.size++;
 				}
 		
 	}
@@ -241,5 +241,6 @@ public class DoublyLinkedList {
 			return false;
 		}
 	}
+
 
 }
