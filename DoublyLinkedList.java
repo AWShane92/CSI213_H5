@@ -107,13 +107,12 @@ public class DoublyLinkedList {
 					return;
 				}
 				//Creates first node in list if the list is empty.
-				if(this.isEmpty()){
+				else if(this.isEmpty()){
 					head = tail = newNode;	
 					this.size++;	
 				}
-				//Adds every member after list.
+				
 				else{
-					
 					this.tail.setNext(newNode);
 					newNode.setPrev(this.tail);
 					this.tail = newNode;

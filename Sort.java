@@ -8,6 +8,7 @@ public class Sort {
 	
 	public static void bubbleSort(int [] input){
 	
+		//Assumes that the list is sorted
 		boolean sorted = true;
 		
 		for(int i = 0; i < input.length - 1; i++){
@@ -29,7 +30,7 @@ public class Sort {
 			bubbleSort(input);
 		}
 		//if the list is sorted then stop sorting
-		else if(sorted){
+		else {
 			return;
 		}
 		
@@ -71,7 +72,7 @@ public class Sort {
 			shakerSort(input);
 		}
 		//if the list is sorted then stop sorting
-		else if(sorted){
+		else {
 			return;
 		}
 		
@@ -79,25 +80,41 @@ public class Sort {
 	
 	public static void bbSort(DoublyLinkedList dll){
 		
+		
 		boolean sorted = true;
 		Node Next = null;
 		Node Prev = null;
 		Node temp = null;
 		Node link = dll.getHead();
 		
-		while(link != null){
+		while(link != dll.getTail()){
 			
-			if((link == dll.getHead())&&(link.getId() > link.getNext().getId())){
+		 if((link == dll.getHead())&&(link.getId() > link.getNext().getId())){
 				Next = link.getNext();
 				temp = Next.getNext();
 				link.setPrev(Next);
 				Next.setNext(link);
 				Next.setPrev(null);
 				link.setNext(temp);
+				temp.setPrev(link);
 				dll.setHead(Next);
+				link = Next.getNext();
 				sorted = false;	
 			}
-			else if((link.getId() > link.getNext().getId())&&(link.getNext()!=null)){
+		  else if((link.getNext() == dll.getTail())&&(link.getId() > link.getNext().getId())){
+				Next = link.getNext();
+				Prev = link.getPrev();
+				Next.setPrev(Prev);
+				link.setPrev(Next);
+				Next.setNext(link);
+				Prev.setNext(Next);	
+				link.setNext(null);
+				dll.setTail(link);
+				link = Next.getNext();
+				sorted = false;	
+			}
+			
+			else if(link.getId() > link.getNext().getId()){
 				Next = link.getNext();
 				Prev = link.getPrev();
 				temp = Next.getNext();
@@ -106,15 +123,19 @@ public class Sort {
 				Next.setNext(link);
 				Prev.setNext(Next);
 				link.setNext(temp);
+				temp.setPrev(link);
+				link = Next.getNext();		
 				sorted = false;					
+			}else{
+			
+				link = link.getNext();	
 			}
 			
-			link = link.getNext();	
 		}
 		if(!sorted){
 			bbSort(dll);		
 		}
-		else if(sorted){
+		else{
 			return;
 			
 		}
@@ -129,19 +150,34 @@ public class Sort {
 		Node temp = null;
 		Node link = dll.getHead();
 		
-		while(link != null){
+		while(link != dll.getTail()){
 			
 			if((link == dll.getHead())&&(link.getId() > link.getNext().getId())){
 				Next = link.getNext();
 				temp = Next.getNext();
-				dll.setHead(Next);
 				link.setPrev(Next);
-				dll.getHead().setNext(link);
-				dll.getHead().setPrev(null);
+				Next.setNext(link);
+				Next.setPrev(null);
 				link.setNext(temp);
+				temp.setPrev(link);
+				dll.setHead(Next);
+				link = Next.getNext();
 				sorted = false;	
 			}
-			else if((link != dll.getTail())&&(link.getId() > link.getNext().getId())){
+		  else if((link.getNext() == dll.getTail())&&(link.getId() > link.getNext().getId())){
+				Next = link.getNext();
+				Prev = link.getPrev();
+				Next.setPrev(Prev);
+				link.setPrev(Next);
+				Next.setNext(link);
+				Prev.setNext(Next);	
+				link.setNext(null);
+				dll.setTail(link);
+				link = Next.getNext();
+				sorted = false;	
+			}
+			
+			else if(link.getId() > link.getNext().getId()){
 				Next = link.getNext();
 				Prev = link.getPrev();
 				temp = Next.getNext();
@@ -150,27 +186,42 @@ public class Sort {
 				Next.setNext(link);
 				Prev.setNext(Next);
 				link.setNext(temp);
+				temp.setPrev(link);
+				link = Next.getNext();		
 				sorted = false;					
-		}
+			}else{
 			
-			link = link.getNext();
+				link = link.getNext();	
+			}
 			
 		}
 		link = dll.getTail();
-		while(link != null){
+		while(link != dll.getHead()){
 			
 			if((link == dll.getTail())&&(link.getId() < link.getPrev().getId())){
 				Prev = link.getPrev();
 				temp = Prev.getPrev();
-				dll.setTail(Prev);
 				link.setNext(Prev);
-				dll.getTail().setPrev(link);
-				dll.getTail().setNext(null);
+				Prev.setPrev(link);
 				link.setPrev(temp);
 				temp.setNext(link);
+				Prev.setNext(null);
+				dll.setTail(Prev);
+				link = Prev.getPrev();
 				sorted = false;
 			}
-			else if((link != dll.getHead())&&(link.getId() < link.getPrev().getId())){
+			else if((link.getPrev() == dll.getHead())&&(link.getId() < link.getPrev().getId())){
+				Prev = link.getPrev();
+				Next = link.getNext();
+				Prev.setNext(Next);
+				link.setNext(Prev);
+				Prev.setPrev(link);
+				link.setPrev(null);
+				dll.setHead(link);
+				link = Prev.getPrev();
+				sorted = false;
+			}
+			else if(link.getId() < link.getPrev().getId()){
 				Prev = link.getPrev();
 				Next = link.getNext();
 				temp = Prev.getPrev();
@@ -178,11 +229,15 @@ public class Sort {
 				link.setNext(Prev);
 				Prev.setPrev(link);
 				link.setPrev(temp);
+				temp.setNext(link);
 				Next.setPrev(Prev);
+				link = Prev.getPrev();
 				sorted = false;
 			}
-			
-			link = link.getPrev();
+			else{
+				
+				link = link.getPrev();
+			}
 			
 		}
 		if(!sorted){
@@ -242,7 +297,7 @@ public class Sort {
 		}
 		System.out.println(" ");
 		System.out.println("Cocktail Shaker Sort comparisons: "+ comparisons);
-		
+		System.out.println(" ");
 		
 		DoublyLinkedList dll = new DoublyLinkedList();
 		
@@ -257,7 +312,8 @@ public class Sort {
 		dll.unorderedAdd(d4);
 		dll.printList();
 		System.out.println(" ");
-		bbSort(dll);
+		//bbSort(dll);
+		cocktailShakerSort(dll);
 		dll.printList();
 		
 		
